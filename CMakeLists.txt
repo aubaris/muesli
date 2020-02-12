@@ -5,8 +5,11 @@ project(muesli LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 set(MySourcesList 
-    src/main.cpp    
+    src/main.cpp
+    src/App.cpp
 )
+
+include_directories("include")
 
 set(SFML_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1/${CMAKE_SYSTEM_NAME}/include")
 set(SFML_LIBRARY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1/${CMAKE_SYSTEM_NAME}/lib")
