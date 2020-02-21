@@ -7,20 +7,30 @@
 
 namespace ecs
 {
-    using CmpID = uint32_t;
+ 
+    template<typename T>
+    class ComponentMemory
+    {
+    public:
+
+    };
 
     class ComponentManager
     {
     public:
+        using ID = uint32_t;
+
         ComponentManager();
-        CmpID addComponent(comp::EComponent component);
-        void freeComponent(CmpID id);
+        ID addComponent(comp::EComponentType type);
+        void freeComponent(ID id, comp::EComponentType type);
 
     private:
-        // pair.key indicates if the component is in use
-        std::vector<std::pair<bool, comp::Transform>> m_transforms;
+        std::vector<comp::Transform> m_transforms;
         std::vector<comp::Movement> m_movements;
         std::vector<comp::Render> m_renders;
+
+        ID m_nextFreeTransform = 0;
+
 
         // Pooling?
     };

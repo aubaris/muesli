@@ -11,11 +11,12 @@ namespace ecs
 namespace comp
 {
 
-enum class EComponent
+enum class EComponentType
 {
     Transform,
     Movement,
-    Render
+    Render,
+    NUM // number of different types
 };
 
 struct Transform
