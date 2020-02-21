@@ -6,6 +6,7 @@ App::App(int width, int height, const std::string& title)
 : m_window(sf::VideoMode(width, height), title)
 {
     std::cout << "App ctor()\n";
+    m_window.setVerticalSyncEnabled(true);
 }
 
 void App::run()
@@ -35,6 +36,10 @@ void App::processEvents()
         {
             case sf::Event::Closed:
                 m_window.close();
+                break;
+            case sf::Event::KeyPressed:
+                m_window.close();
+                break;
             default:
                 break;
         }

@@ -7,7 +7,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(MySourcesList 
     src/main.cpp
     src/App.cpp
+    src/ecs/ComponentManager.cpp
+    src/ecs/Engine.cpp
+    src/ecs/RenderSystem.cpp
 )
+
+# set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include_directories("include")
 
