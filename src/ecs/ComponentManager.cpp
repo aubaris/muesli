@@ -5,36 +5,36 @@ namespace ecs
 
 using comp::EComponentType;
 
-ComponentManager::ID ComponentManager::addComponent(comp::EComponentType component)
+uint32_t ComponentManager::addComponent(EComponentType type)
 {
-    if (m_nextFreeTransform >= m_transforms.size())
-    {
-        m_transforms.push_back({});
-    }
-    else
-    {
-        m_transforms[m_nextFreeTransform].reset();
-    }
-    return m_nextFreeTransform++;
+	switch (type)
+	{
+	case EComponentType::Transform:
+		return m_transforms.add();
+	case EComponentType::Movement:
+		return m_movements.add();
+	case EComponentType::Render:
+		return m_renders.add();
+	default:
+		;
+	}
+	// add critical log
+    return 0;
 }
 
-void ComponentManager::freeComponent(ComponentManager::ID id, comp::EComponentType type)
+void ComponentManager::freeComponent(uint32_t id, EComponentType type)
 {
-    switch (type)
-    {
-        case EComponentType::Transform:
-
-            // Already freed component can be skipped
-            if (id < m_nextFreeTransform) {
-                
-            }
-            break;
-        case EComponentType::Movement:
-            break;
-        
-        case EComponentType::Render:
-            break;
-    }    
+	switch (type)
+	{
+	case EComponentType::Transform:
+		return m_transforms.free(id);
+	case EComponentType::Movement:
+		return m_movements.free(id);
+	case EComponentType::Render:
+		return m_renders.free(id);
+	default:
+		;
+	}  
 }
 
 }

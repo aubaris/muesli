@@ -3,7 +3,6 @@
 
 #include "Components.hpp"
 #include <vector>
-// #include <pair>
 
 namespace ecs
 {
@@ -12,28 +11,40 @@ namespace ecs
     class ComponentMemory
     {
     public:
+		uint32_t add();
+		void free(uint32_t id);
 
+	private:
+		std::vector<T> m_components;
+		uint32_t m_nextFreeID = 0;
     };
 
     class ComponentManager
     {
     public:
-        using ID = uint32_t;
-
         ComponentManager();
-        ID addComponent(comp::EComponentType type);
-        void freeComponent(ID id, comp::EComponentType type);
+		uint32_t addComponent(comp::EComponentType type);
+        void freeComponent(uint32_t id, comp::EComponentType type);
 
     private:
-        std::vector<comp::Transform> m_transforms;
-        std::vector<comp::Movement> m_movements;
-        std::vector<comp::Render> m_renders;
-
-        ID m_nextFreeTransform = 0;
-
+		ComponentMemory<comp::Transform> m_transforms;
+		ComponentMemory<comp::Movement> m_movements;
+		ComponentMemory<comp::Render> m_renders;
 
         // Pooling?
     };
+
+	template<typename T>
+	uint32_t ComponentMemory<T>::add()
+	{
+		return 0;
+	}
+
+	template<typename T>
+	void ComponentMemory<T>::free(uint32_t id)
+	{
+
+	}
 }
 
 #endif
