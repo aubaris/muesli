@@ -10,6 +10,7 @@ set(MySourcesList
     src/ecs/ComponentManager.cpp
     src/ecs/Engine.cpp
     src/ecs/RenderSystem.cpp
+    src/ecs/Entity.cpp
 )
 
 # set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
