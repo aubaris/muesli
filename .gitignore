@@ -6,3 +6,7 @@ compile_commands.json
 .ccls-cache/
 run_muesli
 github_ssh.sh
+
+# windows files
+build/
+.vs/
