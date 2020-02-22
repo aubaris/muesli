@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.13)
 
 project(muesli LANGUAGES CXX)
 
@@ -14,11 +14,27 @@ set(MySourcesList
 
 # set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+message("Generating for os \"${CMAKE_SYSTEM_NAME}\"")
+set(VS_VERSION "")
+
+# Differentiate between visual studio versions
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+	if(${MSVC_VERSION} GREATER_EQUAL 1910 AND ${MSVC_VERSION} LESS_EQUAL 1919)
+		message("Building for VS 15")
+		# set(VS_VERSION "")
+	elseif(${MSVC_VERSION} GREATER_EQUAL 1920 AND ${MSVC_VERSION} LESS_EQUAL 1929)
+		message("Building for VS 16")
+		set(VS_VERSION "VS16_x64/")
+	else()
+		message(FATAL_ERROR "Not configured for MSVC_VERSION ${MSVC_VERSION}")
+	endif()
+endif()
+
 include_directories("include")
 
-set(SFML_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1/${CMAKE_SYSTEM_NAME}/include")
-set(SFML_LIBRARY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1/${CMAKE_SYSTEM_NAME}/lib")
-set(SFML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1/${CMAKE_SYSTEM_NAME}/lib/cmake/SFML")
+set(SFML_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1/${CMAKE_SYSTEM_NAME}/${VS_VERSION}include")
+set(SFML_LIBRARY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1/${CMAKE_SYSTEM_NAME}/${VS_VERSION}lib")
+set(SFML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML-2.5.1/${CMAKE_SYSTEM_NAME}/${VS_VERSION}lib/cmake/SFML")
 
 link_directories(SFML_LIBRARY_DIR)
 include_directories(SFML_INCLUDE_DIR)

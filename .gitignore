@@ -10,3 +10,5 @@ github_ssh.sh
 # windows files
 build/
 .vs/
+
+CMakeSettings.json
