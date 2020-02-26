@@ -14,6 +14,8 @@ set(MySourcesList
     src/App.cpp
 )
 
+find_package( Threads )
+
 # set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 message("Generating for os \"${CMAKE_SYSTEM_NAME}\"")
@@ -54,6 +56,7 @@ endif()
 
 add_executable(muesli ${MySourcesList})
 target_link_libraries(muesli sfml-graphics sfml-audio)
+target_link_libraries( muesli ${CMAKE_THREAD_LIBS_INIT} )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("Building in Debug mode")
