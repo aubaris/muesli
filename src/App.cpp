@@ -1,6 +1,7 @@
 #include "App.hpp"
 #include <iostream>
 #include <SFML/Window/Event.hpp>
+#include "ecs/RenderSystem.hpp"
 
 App::App(int width, int height, const std::string& title)
 : m_window(sf::VideoMode(width, height), title)
@@ -13,6 +14,9 @@ void App::run()
 {
     sf::Clock clock;
 
+    /*m_engine.init();*/
+    m_engine.addSystem(std::move(std::make_unique<ecs::RenderSystem>(m_engine, &m_window)));
+
     while(m_window.isOpen())
     {
         sf::Time elapsedTime = clock.restart();
@@ -24,7 +28,7 @@ void App::run()
 
 void App::update(sf::Time dt)
 {
-    
+    m_engine.update(dt);
 }
 
 void App::processEvents()
@@ -49,6 +53,6 @@ void App::processEvents()
 void App::render(sf::Time dt)
 {
     m_window.clear();
-
+    m_engine.render(dt);
     m_window.display();
 }

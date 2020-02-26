@@ -7,7 +7,7 @@
 #include <vector>
 #include <SFML/System/Time.hpp>
 
-#include <optional>
+//#include <optional>
 
 namespace ecs
 {
@@ -15,7 +15,7 @@ namespace ecs
     class Engine
     {
     public:
-        Engine();
+        //Engine();
 
         // create systems and load entities
         void init();
@@ -23,12 +23,13 @@ namespace ecs
         template<typename F>
         void forAllEntitiesWithComponents(uint32_t mask, F func1);
 
-        void addEntity(uint32_t componentMask);
+        Entity* addEntity(uint32_t componentMask);
         void update(sf::Time dt);
-        void render(sf::Time dt);
+        void render(sf::Time dt = sf::Time::Zero);
 
+        // id needs to be passed by the entity requesting the component, see Entity.componentIDs
         template<typename T>
-        std::optional<T*> getComponentForEntity(uint32_t id);
+        T* getComponent(uint32_t id);
 
         void addSystem(std::unique_ptr<System> system);
 
@@ -37,6 +38,7 @@ namespace ecs
         std::vector<std::unique_ptr<System>> m_systems;
         std::vector<Entity> m_entities;
 
+        // TODO entity pooling
         // TODO cached list of entities with component xyz
     };
 
@@ -45,7 +47,7 @@ namespace ecs
     {
         for (auto& e : m_entities)
         {
-            if (e.m_ComponentMask == mask)
+            if (e.componentMask == mask)
             {
                 func1(e);
             }
@@ -53,10 +55,9 @@ namespace ecs
     }
 
     template<typename T>
-    std::optional<T*> Engine::getComponentForEntity(uint32_t id)
+    T* Engine::getComponent(uint32_t id)
     {
-        m_componentManager.
-        return nullptr;
+        return m_componentManager.getComponent<T>(id);
     }
 }
 

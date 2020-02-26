@@ -2,6 +2,7 @@
 #define APP_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "ecs/Engine.hpp"
 
 class App
 {
@@ -16,6 +17,7 @@ private:
     void render(sf::Time dt);
 
     sf::RenderWindow m_window;
+    ecs::Engine m_engine;
 };
 
 #endif

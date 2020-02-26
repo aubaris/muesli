@@ -6,11 +6,12 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(MySourcesList 
     src/main.cpp
-    src/App.cpp
     src/ecs/ComponentManager.cpp
+    src/ecs/Components.cpp
     src/ecs/Engine.cpp
     src/ecs/RenderSystem.cpp
     src/ecs/Entity.cpp
+    src/App.cpp
 )
 
 # set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
