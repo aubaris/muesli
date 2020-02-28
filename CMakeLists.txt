@@ -10,6 +10,7 @@ set(MySourcesList
     src/ecs/Components.cpp
     src/ecs/Engine.cpp
     src/ecs/RenderSystem.cpp
+    src/ecs/ColorChangeSystem.cpp
     src/ecs/Entity.cpp
     src/App.cpp
 )
