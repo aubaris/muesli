@@ -46,8 +46,9 @@ namespace ecs
 
     private:
 		ComponentMemory<comp::Transform> m_transforms;
-		ComponentMemory<comp::Movement> m_movements;
-		ComponentMemory<comp::RectangleShapeRender> m_rectangleShapeRenders;
+        ComponentMemory<comp::Movement> m_movements;
+        ComponentMemory<comp::RectangleShapeRender> m_rectangleShapeRenders;
+        ComponentMemory<comp::DebugInfo> m_debugInfos;
     };
 	
 	//template<>

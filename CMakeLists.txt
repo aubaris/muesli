@@ -11,6 +11,7 @@ set(MySourcesList
     src/ecs/Engine.cpp
     src/ecs/RenderSystem.cpp
     src/ecs/ColorChangeSystem.cpp
+    src/ecs/DebuggingSystem.cpp
     src/ecs/Entity.cpp
     src/App.cpp
 )

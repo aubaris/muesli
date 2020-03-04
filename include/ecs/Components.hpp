@@ -5,6 +5,8 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <memory>
+#include <list>
+#include <algorithm>
 
 namespace ecs
 {
@@ -16,8 +18,9 @@ enum class EComponentType : uint32_t
 {
     //NoComponentSet = 0,
     Transform = 0,
-    Movement = 1 << 2,
-    RectangleShapeRender = 1 << 1,
+    Movement = 1 << 1,
+    RectangleShapeRender = 1 << 2,
+    DebugInfo = 1 << 3,
     NUM // number of different types
 };
 
@@ -68,6 +71,18 @@ struct RectangleShapeRender : public IComponent
 
     void reset() override {
         shape = sf::RectangleShape{};
+    }
+};
+
+struct DebugInfo : public IComponent
+{
+    DebugInfo() : IComponent(EComponentType::DebugInfo) {}
+
+    std::list<float> fpsQueue;
+
+    void reset() override {
+        std::list<float> swapQueue;
+        std::swap(fpsQueue, swapQueue);
     }
 };
 

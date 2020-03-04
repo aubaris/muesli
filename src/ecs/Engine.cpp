@@ -37,6 +37,11 @@ Entity* ecs::Engine::addEntity(uint32_t componentMask)
         entity.componentIDs.emplace(EComponentType::RectangleShapeRender,
             m_componentManager.addComponent(EComponentType::RectangleShapeRender));
     }
+    if (comp::isPartOfMask(componentMask, EComponentType::DebugInfo))
+    {
+        entity.componentIDs.emplace(EComponentType::DebugInfo,
+            m_componentManager.addComponent(EComponentType::DebugInfo));
+    }
     //m_componentManager.
     m_entities.push_back(entity);
 

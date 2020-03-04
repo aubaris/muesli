@@ -3,6 +3,7 @@
 #include <SFML/Window/Event.hpp>
 #include "ecs/RenderSystem.hpp"
 #include "ecs/ColorChangeSystem.hpp"
+#include "ecs/DebuggingSystem.hpp"
 
 App::App(int width, int height, const std::string& title)
 : m_window(sf::VideoMode(width, height), title)
@@ -17,6 +18,7 @@ void App::run()
 
     /*m_engine.init();*/
     m_engine.addSystem(std::move(std::make_unique<ecs::RenderSystem>(m_engine, &m_window)));
+    m_engine.addSystem(std::move(std::make_unique<ecs::DebuggingSystem>(m_engine, &m_window)));
     m_engine.addSystem(std::move(std::make_unique<ecs::ColorChangeSystem>(m_engine)));
 
     while(m_window.isOpen())
@@ -31,7 +33,7 @@ void App::run()
 void App::update(sf::Time dt)
 {
     m_engine.update(dt);
-    std::cout << "FPS: " << 1.0f / dt.asSeconds() << "\n";
+    //std::cout << "FPS: " << 1.0f / dt.asSeconds() << "\n";
 }
 
 void App::processEvents()

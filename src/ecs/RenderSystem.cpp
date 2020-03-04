@@ -37,7 +37,7 @@ namespace ecs
             component->shape.setSize(sf::Vector2f(10.0f, 10.0f));
             component->shape.setFillColor(sf::Color::Cyan);
             component->shape.setPosition(x, y);
-            component->shape.setOutlineThickness(0.5f);
+            //component->shape.setOutlineThickness(0.5f);
         }
     }
 

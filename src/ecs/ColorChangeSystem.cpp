@@ -31,7 +31,7 @@ namespace ecs
                 auto component = m_engine.getComponent<comp::RectangleShapeRender>(e.id);
                 if (bool_dist(mt)) {
                     component->shape.setFillColor(sf::Color(dist(mt), dist(mt), dist(mt)));
-                    component->shape.setOutlineColor(sf::Color(dist(mt), dist(mt), dist(mt)));
+                    //component->shape.setOutlineColor(sf::Color(dist(mt), dist(mt), dist(mt)));
                 }
             };
             m_engine.forAllEntitiesWithComponents(m_mask, func);
