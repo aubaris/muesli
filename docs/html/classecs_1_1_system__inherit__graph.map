@@ -1,0 +1,6 @@
+<map id="ecs::System" name="ecs::System">
+<area shape="rect" id="node1" title=" " alt="" coords="231,5,327,32"/>
+<area shape="rect" id="node2" href="$classecs_1_1_color_change_system.html" title=" " alt="" coords="5,80,176,107"/>
+<area shape="rect" id="node3" href="$classecs_1_1_debugging_system.html" title=" " alt="" coords="200,80,357,107"/>
+<area shape="rect" id="node4" href="$classecs_1_1_render_system.html" title=" " alt="" coords="382,80,519,107"/>
+</map>
