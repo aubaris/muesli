@@ -4,12 +4,16 @@
 #include "ecs/RenderSystem.hpp"
 #include "ecs/ColorChangeSystem.hpp"
 #include "ecs/DebuggingSystem.hpp"
+#include "ecs/EntityDefinitions.hpp"
+
+using ecs::comp::EComponentType;
 
 App::App(int width, int height, const std::string& title)
 : m_window(sf::VideoMode(width, height), title)
 {
     std::cout << "App ctor()\n";
     // m_window.setVerticalSyncEnabled(true);
+    //m_window.setFramerateLimit(120);
 }
 
 void App::run()
@@ -20,6 +24,20 @@ void App::run()
     m_engine.addSystem(std::move(std::make_unique<ecs::RenderSystem>(m_engine, &m_window)));
     m_engine.addSystem(std::move(std::make_unique<ecs::DebuggingSystem>(m_engine, &m_window)));
     m_engine.addSystem(std::move(std::make_unique<ecs::ColorChangeSystem>(m_engine)));
+
+    // Add player
+    auto player = m_engine.getUnsafeEntityPtr(m_engine.addEntity(ecs::entity::PlayerMask));
+    if (player)
+    {
+        auto circleShapeRender = m_engine.getComponent<ecs::comp::CircleShapeRender>(player->componentIDs[EComponentType::CircleShapeRender]);
+        if (circleShapeRender)
+        {
+            circleShapeRender->shape.setRadius(20.0f);
+            circleShapeRender->shape.setPosition(400.0f, 200.0f);
+            circleShapeRender->shape.setFillColor(sf::Color::Red);
+            std::cout << "circleshape";
+        }
+    }
 
     while(m_window.isOpen())
     {

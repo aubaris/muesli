@@ -15,7 +15,7 @@ namespace ecs
     class Engine
     {
     public:
-        //Engine();
+        Engine();
 
         // create systems and load entities
         void init();
@@ -23,7 +23,7 @@ namespace ecs
         template<typename F>
         void forAllEntitiesWithComponents(uint32_t mask, F func1);
 
-        Entity* addEntity(uint32_t componentMask);
+        uint32_t addEntity(uint32_t componentMask);
         void update(sf::Time dt);
         void render(sf::Time dt = sf::Time::Zero);
 
@@ -32,6 +32,9 @@ namespace ecs
         T* getComponent(uint32_t id);
 
         void addSystem(std::unique_ptr<System> system);
+
+        // The returned reference might become invalid due to internal memory reallocation
+        Entity* const getUnsafeEntityPtr(uint32_t id);
 
     private:
         ComponentManager m_componentManager;

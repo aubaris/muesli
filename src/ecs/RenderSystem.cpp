@@ -22,20 +22,26 @@ namespace ecs
         : System(engine), m_window(window)
     {
         // create some test entities
-        m_mask = comp::createMaskForComponents(EComponentType::RectangleShapeRender);
+        m_mask = comp::createMaskForComponents(EComponentType::RectangleShapeRender/*, EComponentType::CircleShapeRender*/);
 
         std::cout << "ctor RenderSystem: mask = " << m_mask << "\n";
 
         //mask |= EComponentType::Transform;
-        for (int i = 0; i < 3000; ++i)
+        for (int i = 0; i < 100; ++i)
         {
-            auto entity = m_engine.addEntity(m_mask);
+            auto entityID = m_engine.addEntity(m_mask);
             const float x = dist_x(mt);
             const float y = dist_y(mt);
+            auto entity = m_engine.getUnsafeEntityPtr(entityID);
+            if (!entity)
+            {
+                // Log error
+                continue;
+            }
             auto id = entity->componentIDs[EComponentType::RectangleShapeRender];
             auto component = m_engine.getComponent<comp::RectangleShapeRender>(id);
             component->shape.setSize(sf::Vector2f(10.0f, 10.0f));
-            component->shape.setFillColor(sf::Color::Cyan);
+            component->shape.setFillColor(sf::Color::Black);
             component->shape.setPosition(x, y);
             //component->shape.setOutlineThickness(0.5f);
         }
@@ -49,10 +55,26 @@ namespace ecs
     void RenderSystem::render(sf::Time dt)
     {
         auto func = [this](Entity& e) {
-            auto component = m_engine.getComponent<comp::RectangleShapeRender>(e.id);
-            m_window->draw(component->shape);
+            if (comp::isPartOfMask(e.componentMask, comp::EComponentType::RectangleShapeRender))
+            {
+                auto id = e.componentIDs[EComponentType::RectangleShapeRender];
+                auto component = m_engine.getComponent<comp::RectangleShapeRender>(id);
+                if (component)
+                    m_window->draw(component->shape);
+            }
+            if (comp::isPartOfMask(e.componentMask, comp::EComponentType::CircleShapeRender))
+            {
+                auto id = e.componentIDs[EComponentType::CircleShapeRender];
+                auto component = m_engine.getComponent<comp::CircleShapeRender>(id);
+                if (component)
+                    m_window->draw(component->shape);
+            }
+            /*auto component = m_engine.getComponent<comp::RectangleShapeRender>(e.id);
+            m_window->draw(component->shape);*/
         };
-        m_engine.forAllEntitiesWithComponents(m_mask, func);
+        m_engine.forAllEntitiesWithComponents(comp::createMaskForComponents(EComponentType::CircleShapeRender), func);
+        m_engine.forAllEntitiesWithComponents(comp::createMaskForComponents(EComponentType::RectangleShapeRender), func);
+        //m_engine.forAllEntitiesWithComponents(m_mask, func);
     }
 }
 

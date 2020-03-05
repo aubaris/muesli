@@ -11,7 +11,7 @@ namespace ecs
 {
 
     class Engine;
-    class Entity;
+    //class Entity;
 
     class DebuggingSystem : public System
     {
@@ -24,9 +24,10 @@ namespace ecs
         uint32_t m_mask = 0;
         sf::RenderWindow* m_window;
         sf::Font m_font;
+        sf::Text m_fpsAverageText;
         sf::Text m_fpsText;
 
-        Entity* m_entity = 0;
+        uint32_t m_entityID = 0;
 
         sf::Time m_refreshCD;
     };

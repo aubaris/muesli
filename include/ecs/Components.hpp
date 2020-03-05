@@ -4,6 +4,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
 #include <memory>
 #include <list>
 #include <algorithm>
@@ -16,11 +17,12 @@ namespace comp
 
 enum class EComponentType : uint32_t
 {
-    //NoComponentSet = 0,
-    Transform = 0,
-    Movement = 1 << 1,
-    RectangleShapeRender = 1 << 2,
-    DebugInfo = 1 << 3,
+    INVALID_VALUE = 0,
+    Transform = 1 << 1,
+    Movement = 1 << 2,
+    RectangleShapeRender = 1 << 3,
+    DebugInfo = 1 << 4,
+    CircleShapeRender = 1 << 5,
     NUM // number of different types
 };
 
@@ -70,7 +72,8 @@ struct RectangleShapeRender : public IComponent
     sf::RectangleShape shape;
 
     void reset() override {
-        shape = sf::RectangleShape{};
+        sf::RectangleShape swapShape;
+        std::swap(shape, swapShape);
     }
 };
 
@@ -83,6 +86,18 @@ struct DebugInfo : public IComponent
     void reset() override {
         std::list<float> swapQueue;
         std::swap(fpsQueue, swapQueue);
+    }
+};
+
+struct CircleShapeRender : public IComponent
+{
+    CircleShapeRender() : IComponent(EComponentType::CircleShapeRender) {}
+
+    sf::CircleShape shape;
+
+    void reset() override {
+        sf::CircleShape swapShape;
+        std::swap(shape, swapShape);
     }
 };
 

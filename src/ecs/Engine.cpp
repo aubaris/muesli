@@ -7,7 +7,12 @@ namespace ecs
 
 using comp::EComponentType;
 
-Entity* ecs::Engine::addEntity(uint32_t componentMask)
+Engine::Engine()
+{
+    //m_entities.reserve(20);
+}
+
+uint32_t ecs::Engine::addEntity(uint32_t componentMask)
 {
     Entity entity;
     entity.id = static_cast<uint32_t>(m_entities.size());
@@ -42,10 +47,15 @@ Entity* ecs::Engine::addEntity(uint32_t componentMask)
         entity.componentIDs.emplace(EComponentType::DebugInfo,
             m_componentManager.addComponent(EComponentType::DebugInfo));
     }
+    if (comp::isPartOfMask(componentMask, EComponentType::CircleShapeRender))
+    {
+        entity.componentIDs.emplace(EComponentType::CircleShapeRender,
+            m_componentManager.addComponent(EComponentType::CircleShapeRender));
+    }
     //m_componentManager.
     m_entities.push_back(entity);
 
-    return &m_entities.back();
+    return entity.id;
 }
 
 void Engine::update(sf::Time dt)
@@ -67,6 +77,18 @@ void Engine::render(sf::Time dt)
 void Engine::addSystem(std::unique_ptr<System> system)
 {
     m_systems.push_back(std::move(system));
+}
+
+ecs::Entity* const Engine::getUnsafeEntityPtr(uint32_t id)
+{
+    for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+    {
+        if (it->id == id)
+        {
+            return &(*it);
+        }
+    }
+    return nullptr;
 }
 
 }

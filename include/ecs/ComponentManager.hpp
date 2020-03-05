@@ -3,7 +3,8 @@
 
 #include "Components.hpp"
 #include <vector>
-#include <SFML/Graphics/RectangleShape.hpp>
+//#include <SFML/Graphics/RectangleShape.hpp>
+//#include <SFML/Graphics/CircleShape.hpp>
 
 namespace ecs
 {
@@ -49,6 +50,7 @@ namespace ecs
         ComponentMemory<comp::Movement> m_movements;
         ComponentMemory<comp::RectangleShapeRender> m_rectangleShapeRenders;
         ComponentMemory<comp::DebugInfo> m_debugInfos;
+        ComponentMemory<comp::CircleShapeRender> m_circleShapeRenders;
     };
 	
 	//template<>

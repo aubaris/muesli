@@ -24,19 +24,31 @@ namespace ecs
         m_fpsText.setFont(m_font);
         m_fpsText.setPosition(30, 30);
         m_fpsText.setFillColor(sf::Color::White);
-
+        m_fpsText.setCharacterSize(16);
         m_fpsText.setString("Test 123");
 
-        m_entity = m_engine.addEntity(m_mask);
+        m_fpsAverageText.setFont(m_font);
+        m_fpsAverageText.setPosition(30, 60);
+        m_fpsAverageText.setFillColor(sf::Color::White);
+        m_fpsAverageText.setCharacterSize(16);
+        m_fpsAverageText.setString("Test 123");
+
+        m_entityID = m_engine.addEntity(m_mask);
     }
 
     void DebuggingSystem::update(sf::Time dt)
     {
+        //return;
         m_refreshCD -= dt;
         if (m_refreshCD <= sf::Time::Zero)
         {
             m_refreshCD = sf::milliseconds(500);
-            comp::DebugInfo* debugInfo = m_engine.getComponent<comp::DebugInfo>(m_entity->componentIDs[EComponentType::DebugInfo]);
+            auto entity = m_engine.getUnsafeEntityPtr(m_entityID);
+            if (!entity)
+            {
+                return;
+            }
+            comp::DebugInfo* debugInfo = m_engine.getComponent<comp::DebugInfo>(entity->componentIDs[EComponentType::DebugInfo]);
             if (debugInfo)
             {
                 debugInfo->fpsQueue.push_back(1.0f / dt.asSeconds());
@@ -45,7 +57,8 @@ namespace ecs
                     debugInfo->fpsQueue.pop_front();
                 }
                 int sum = std::accumulate(debugInfo->fpsQueue.begin(), debugInfo->fpsQueue.end(), 0);
-                m_fpsText.setString("Fps: " + std::to_string(sum / debugInfo->fpsQueue.size()));
+                m_fpsAverageText.setString("Avg. fps: " + std::to_string(sum / debugInfo->fpsQueue.size()));
+                m_fpsText.setString("Fps: " + std::to_string(std::lround(1.0f / dt.asSeconds())));
             }
             else
             {
@@ -57,6 +70,7 @@ namespace ecs
     void DebuggingSystem::render(sf::Time dt)
     {
         // TODO: Render fps info
+        m_window->draw(m_fpsAverageText);
         m_window->draw(m_fpsText);
     }
 }

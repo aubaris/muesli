@@ -16,7 +16,9 @@ uint32_t ComponentManager::addComponent(EComponentType type)
 	case EComponentType::RectangleShapeRender:
 		return m_rectangleShapeRenders.add();
 	case EComponentType::DebugInfo:
-		return m_debugInfos.add();
+        return m_debugInfos.add();
+    case EComponentType::CircleShapeRender:
+		return m_circleShapeRenders.add();
 	default:
 		;
 	}
@@ -37,6 +39,8 @@ void ComponentManager::freeComponent(uint32_t id, EComponentType type)
 		return m_rectangleShapeRenders.free(id);
     case EComponentType::DebugInfo:
         return m_debugInfos.free(id);
+    case EComponentType::CircleShapeRender:
+        return m_circleShapeRenders.free(id);
 	default:
 		;
 	}  
@@ -64,6 +68,12 @@ template<>
 comp::DebugInfo* ComponentManager::getComponent(uint32_t id)
 {
     return m_debugInfos[id];
+}
+
+template<>
+comp::CircleShapeRender* ComponentManager::getComponent(uint32_t id)
+{
+    return m_circleShapeRenders[id];
 }
 
 }

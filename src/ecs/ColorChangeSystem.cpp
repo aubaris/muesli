@@ -30,7 +30,7 @@ namespace ecs
             auto func = [this](Entity& e) {
                 auto component = m_engine.getComponent<comp::RectangleShapeRender>(e.id);
                 if (bool_dist(mt)) {
-                    component->shape.setFillColor(sf::Color(dist(mt), dist(mt), dist(mt)));
+                    component->shape.setFillColor(sf::Color(dist(mt), dist(mt), dist(mt), 128));
                     //component->shape.setOutlineColor(sf::Color(dist(mt), dist(mt), dist(mt)));
                 }
             };
