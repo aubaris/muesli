@@ -12,3 +12,5 @@ build/
 .vs/
 
 CMakeSettings.json
+
+docs/
